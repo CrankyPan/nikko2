@@ -26,11 +26,11 @@
 
       <%
         try {
-           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-Connection con = DriverManager.getConnection("jdbc:sqlserver://nikkospace.database.windows.net:1433;database=haiya;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;"); 
-          String sql = "SELECT * FROM package ORDER BY packageID";
-          Statement stmt = con.createStatement();
-	  ResultSet rs = stmt.executeQuery(sql);
+		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		Connection con = DriverManager.getConnection("jdbc:sqlserver://nikkospace.database.windows.net:1433;database=haiya;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
+		String sql = "SELECT * FROM package ORDER BY packageID";
+		Statement stmt = con.createStatement();
+		ResultSet rs = stmt.executeQuery(sql);
 
           while (rs.next()) { 
       %>

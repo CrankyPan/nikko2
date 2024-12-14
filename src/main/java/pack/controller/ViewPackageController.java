@@ -6,7 +6,6 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import pack.model.Package; 
 
 import java.io.IOException;
 import java.sql.Connection;
@@ -30,9 +29,8 @@ public class ViewPackageController extends HttpServlet {
         if (id != null) {
             try {
                 int packageId = Integer.parseInt(id);
-                
-                // Get the database connection
-                Connection con = pack.connection.AzureSqlDatabaseConnection.getConnection(); 
+
+                Connection con = pack.connection.AzureSqlDatabaseConnection.getConnection();
 
                 String sql = "SELECT * FROM package WHERE packageId = ?";
                 PreparedStatement ps = con.prepareStatement(sql);
@@ -40,12 +38,12 @@ public class ViewPackageController extends HttpServlet {
                 ResultSet rs = ps.executeQuery();
 
                 if (rs.next()) {
-                    Package pkg = new Package(
-                        rs.getInt("packageId"),
-                        rs.getString("packageName"),
-                        rs.getDouble("packagePrice")
-                    );
-                    request.setAttribute("pkg", pkg); 
+                    String packageName = rs.getString("packageName");
+                    double packagePrice = rs.getDouble("packagePrice");
+
+                    // Set the package name and price as attributes
+                    request.setAttribute("packageName", packageName);
+                    request.setAttribute("packagePrice", packagePrice);
                 }
 
                 con.close();
@@ -54,12 +52,12 @@ public class ViewPackageController extends HttpServlet {
                 System.out.println("Error: Invalid package ID format.");
             } catch (SQLException e) {
                 System.out.println("Error retrieving package: " + e.getMessage());
-            } 
+            }
         } else {
             System.out.println("Error: No package ID provided.");
         }
 
-        RequestDispatcher req = request.getRequestDispatcher("viewPackage.jsp"); 
+        RequestDispatcher req = request.getRequestDispatcher("viewPackage.jsp");
         req.forward(request, response);
     }
 }

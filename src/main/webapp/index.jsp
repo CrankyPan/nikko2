@@ -10,15 +10,7 @@
 <link rel="stylesheet" href="IndexPackageStyle.css">
 </head>
 <body>
-<header>
-	  <nav>
-	    <ul class="menu">
-	      <li><a href="index.jsp">Home</a></li>
-	      <li><a href="addPackage.jsp">Create</a></li>
-	      <li><a href="package.jsp">Products</a></li>
-	    </ul>
-	  </nav>
-</header>
+
 
   <main>
     <section>
@@ -36,7 +28,7 @@
           
           <% try {
         	  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-  			Connection con = DriverManager.getConnection("jdbc:sqlserver://nikkospace.database.windows.net:1433;database=haiya;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
+  			Connection con = DriverManager.getConnection("jdbc:sqlserver://nikkospace.database.windows.net:1433;database=nikkospace;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
   			
   			Statement stmt = con.createStatement();
   			String sql = "SELECT * FROM package ORDER BY packageid";

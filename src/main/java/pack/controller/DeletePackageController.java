@@ -46,7 +46,7 @@ public class DeletePackageController extends HttpServlet {
             System.out.println("Error: No package ID provided.");
         }
 
-        // Redirect back to the package list page after deleting
+        // Redirect to index.jsp after deleting
         response.sendRedirect("index.jsp"); 
     }
 }

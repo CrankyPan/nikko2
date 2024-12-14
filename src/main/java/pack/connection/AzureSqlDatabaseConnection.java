@@ -16,7 +16,7 @@ public class AzureSqlDatabaseConnection {
         Connection connection = null;
         try {
             Class.forName(DB_DRIVER);
-            connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+            connection = DriverManager.getConnection(DB_CONNECTION);
         } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }

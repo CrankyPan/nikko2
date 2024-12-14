@@ -50,9 +50,10 @@ public class AddPackageController extends HttpServlet {
             
 		
             
-             try { Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-            Connection con = DriverManager.getConnection("jdbc:sqlserver://nikkospace.database.windows.net:1433;database=haiya;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
-            String sql = "INSERT INTO package (packageName, packagePrice) VALUES (?, ?)";
+             try {
+		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+		  Connection con = AzureSqlDatabaseConnection.getConnection();
+		  String sql = "INSERT INTO package (packageName, packagePrice) VALUES (?, ?)";
             	 PreparedStatement ps = con.prepareStatement(sql);
                  ps.setString(1, packageName);
                  ps.setDouble(2, packagePrice);

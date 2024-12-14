@@ -15,14 +15,33 @@
   <div class="container">
     <h1>View Package</h1>
 
-    <% if (request.getAttribute("packageName") != null && request.getAttribute("packagePrice") != null) { %>
-      <p>Package Name: <%= request.getAttribute("packageName") %></p> 
-      <p>Package Price: <%= request.getAttribute("packagePrice") %></p> 
-    <% } else { %>
-      <p>No package found.</p> 
-    <% } %>
+   <table border="1">
+  <tr>
+    <th>Name</th>
+    <th>Value</th>
+  </tr>
 
-  </div>
+  <% 
+    if (request.getAttribute("packageName") != null && request.getAttribute("packagePrice") != null) { 
+  %>
+  <tr>
+    <td>Package Name</td>
+    <td><%= request.getAttribute("packageName") %></td> 
+  </tr>
+  <tr>
+    <td>Package Price</td>
+    <td><%= request.getAttribute("packagePrice") %></td> 
+  </tr>
+  <% 
+    } else { 
+  %>
+  <tr>
+    <td colspan="2">No package found.</td> 
+  </tr>
+  <% 
+    } 
+  %>
+</table>
 </main>
 
 </body>

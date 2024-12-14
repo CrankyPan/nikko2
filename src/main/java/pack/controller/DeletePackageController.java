@@ -47,6 +47,6 @@ public class DeletePackageController extends HttpServlet {
         }
 
         // Redirect to index.jsp after deleting
-        response.sendRedirect("index.jsp"); 
+        response.sendRedirect("listPackage.jsp"); 
     }
 }

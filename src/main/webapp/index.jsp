@@ -28,8 +28,8 @@
         try {
           Connection con = AzureSqlDatabaseConnection.getConnection();
           String sql = "SELECT * FROM package ORDER BY packageID";
-          PreparedStatement ps = con.prepareStatement(sql);
-          ResultSet rs = ps.executeQuery();
+          Statement stmt = con.createStatement();
+	  ResultSet rs = stmt.executeQuery(sql);
 
           while (rs.next()) { 
       %>
@@ -45,7 +45,6 @@
           }
 
           rs.close();
-          ps.close();
           con.close();
 
         } catch (Exception e) {

@@ -27,19 +27,19 @@
       <%
         try {
           Connection con = AzureSqlDatabaseConnection.getConnection();
-          String sql = "SELECT * FROM package ORDER BY packageId";
+          String sql = "SELECT * FROM package ORDER BY packageID";
           PreparedStatement ps = con.prepareStatement(sql);
           ResultSet rs = ps.executeQuery();
 
           while (rs.next()) { 
       %>
       <tr>
-        <td><%= rs.getInt("packageId") %></td>
+        <td><%= rs.getInt("packageID") %></td>
         <td><%= rs.getString("packageName") %></td>
         <td><%= rs.getDouble("packagePrice") %></td>
-        <td><a class="btn btn-info" href="ViewPackageController?packageid=<%= rs.getInt("packageId") %>">View</a></td>
-        <td><a class="btn btn-primary" href="UpdatePackageController?id=<%= rs.getInt("packageId") %>">Update</a></td>
-        <td><button class=deleteBtn id="<%= rs.getInt("packageId") %>" onclick="confirmation(this.id)">Delete</button></td> 
+        <td><a class="btn btn-info" href="ViewPackageController?id=<%= rs.getInt("packageID") %>">View</a></td>
+        <td><a class="btn btn-primary" href="UpdatePackageController?id=<%= rs.getInt("packageID") %>">Update</a></td>
+        <td><button class=deleteBtn id="<%= rs.getInt("packageID") %>" onclick="confirmation(this.id)">Delete</button></td> 
       </tr>
       <% 
           }
@@ -56,11 +56,11 @@
     </table>
     </div>
 	<script>
-	function confirmation(packageId){					  		 
-		  console.log(packageId);
+	function confirmation(packageID){					  		 
+		  console.log(packageID);
 		  var r = confirm("Are you sure you want to delete?");
 		  if (r == true) {				 		  
-			  location.href = 'DeletePackageController?id=' + packageId;
+			  location.href = 'DeletePackageController?id=' + packageID;
 			  alert("Selected package successfully deleted");			
 		  } else {				  
 		      return false;	

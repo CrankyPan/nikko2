@@ -11,7 +11,7 @@
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>View Spectacles</title>
+<title>Pet Grooming Package</title>
 <link rel="stylesheet" href="IndexPackageStyle.css">
 </head>
 <body>
@@ -74,7 +74,7 @@
         <td><%= pkg.getpackageId() %></td>
         <td><%= pkg.getpackageName() %></td>
         <td><%= pkg.getpackagePrice() %></td>
-        <td><a class="btn btn-info" ">View</a></td>
+        <td><a class="btn btn-info" href="ViewPackageController?id=<%= pkg.getpackageId() %>">View</a></td>
         <td><a class="btn btn-primary" href="UpdatePackageController?id=<%= pkg.getpackageId() %>">Update</a></td>
         <td><button class=deleteBtn id="<%= pkg.getpackageId() %>" onclick="confirmation(this.id)">Delete</button></td> 
     </tr>

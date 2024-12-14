@@ -74,7 +74,7 @@
         <td><%= pkg.getpackageId() %></td>
         <td><%= pkg.getpackageName() %></td>
         <td><%= pkg.getpackagePrice() %></td>
-        <td><a class="btn btn-info" href="viewPackage?id=<%= pkg.getpackageId() %>">View</a></td>
+        <td><a class="btn btn-info" href="ViewPackageController?id=<%= pkg.getpackageId() %>">View</a></td>
         <td><a class="btn btn-primary" href="UpdatePackageController?id=<%= pkg.getpackageId() %>">Update</a></td>
         <td><button class=deleteBtn id="<%= pkg.getpackageId() %>" onclick="confirmation(this.id)">Delete</button></td> 
     </tr>

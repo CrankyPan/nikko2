@@ -57,7 +57,7 @@
 
 <div class="container">
 <h2>All Products</h2>
-      <table>
+      <table border="1">
         <thead>
           <tr>
             <th>ID</th>
@@ -81,7 +81,7 @@
 <% 
   } 
 %> 
-	</table>
+	</table >
 	<div class="addbtn" >
 	<a href="addPackage.jsp" class="addPackageBtn">Add New Package</a>
 	</div>

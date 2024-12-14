@@ -62,13 +62,13 @@ public class AddPackageController extends HttpServlet {
             }
             double packagePrice = Double.parseDouble(packagePriceStr);
 
-            Class.forName("oracle.jdbc.driver.OracleDriver");
-            Connection con = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "nikko", "system");
-            String sql = "INSERT INTO packages(packageId, packageName, packagePrice) VALUES(package_id_seq.NEXTVAL,?,?)";
-            PreparedStatement ps = con.prepareStatement(sql);
-
-            ps.setString(1, packageName);
-            ps.setDouble(2, packagePrice);
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            Connection con = DriverManager.getConnection("jdbc:sqlserver://nikkospace.database.windows.net:1433;database=haiya;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
+           String sql = "INSERT INTO package (packageName, packagePrice) VALUES (?, ?)";
+            try (PreparedStatement ps = con.prepareStatement(sql)) { 
+                ps.setString(1, packageName);
+                ps.setDouble(2, packagePrice);
+                ps.executeUpdate();
 
             ps.executeUpdate();
             con.close();

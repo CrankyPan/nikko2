@@ -1,71 +1,70 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-    <%@ page import="pack.connection.AzureSqlDatabaseConnection" %>
 <%@ page import="java.sql.*" %>
-<%@ page import="pack.model.Package" %>
-<%@ page import="java.util.ArrayList" %>
-<%@ page import="java.util.List" %>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="ISO-8859-1">
-<title>Package Page</title>
+<title>View Spectacles</title>
 <link rel="stylesheet" href="IndexPackageStyle.css">
 </head>
 <body>
-<div class="container">
-    <h1>Package List</h1>
-    <table border="1">
-      <tr>
-        <th>Package Id</th>
-        <th>Package Name</th>
-        <th>Package Price</th>
-        <th colspan="3">Action</th>
-      </tr>
+<header>
+	  <nav>
+	    <ul class="menu">
+	      <li><a href="index.jsp">Home</a></li>
+	      <li><a href="addPackage.jsp">Create</a></li>
+	      <li><a href="package.jsp">Products</a></li>
+	    </ul>
+	  </nav>
+</header>
 
-      <%
-        try {
-		Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-		Connection con = DriverManager.getConnection("jdbc:sqlserver://nikkospace.database.windows.net:1433;database=haiya;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
-		String sql = "SELECT * FROM package ORDER BY packageID";
-		Statement stmt = con.createStatement();
-		ResultSet rs = stmt.executeQuery(sql);
+  <main>
+    <section>
+      <h2>All Products</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th colspan="3">Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          
+          <% try {
+        	  Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+  			Connection con = DriverManager.getConnection("jdbc:sqlserver://nikkospace.database.windows.net:1433;database=haiya;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;");
+  			
+  			Statement stmt = con.createStatement();
+  			String sql = "SELECT * FROM package ORDER BY packageid";
+  			
+  			ResultSet rs = stmt.executeQuery(sql);
+  			while(rs.next()) {
+  				out.println("<tr>");
+  				out.println("<td>" + rs.getInt(1) + "</td>");
+  				out.println("<td>" + rs.getString(2) + "</td>");
+  				out.println("<td>" + rs.getDouble(3) + "</td>");
+  				out.print("<td> <a href=\"viewPackage.jsp?id=" + rs.getInt(1) + "\"> View </a> </td>");
+  				out.print("<td> <a href=\"updatePackage.jsp?id=" + rs.getInt(1) + "\"> Update </a> </td>");
+  				out.print("<td> <a href=\"delete.jsp?id=" + rs.getInt(1) + "\"> Delete </a> </td>");
+  				out.println("</tr>");
+  			}
+  			con.close();
+  		}
+  		catch (Exception e){
+  			System.out.println(e);
+  		} %>
+          
+        </tbody>
+      </table>
+    </section>
+  </main>
 
-          while (rs.next()) { 
-      %>
-      <tr>
-        <td><%= rs.getInt("packageID") %></td>
-        <td><%= rs.getString("packageName") %></td>
-        <td><%= rs.getDouble("packagePrice") %></td>
-        <td><a class="btn btn-info" href="ViewPackageController?id=<%= rs.getInt("packageID") %>">View</a></td>
-        <td><a class="btn btn-primary" href="UpdatePackageController?id=<%= rs.getInt("packageID") %>">Update</a></td>
-        <td><button class=deleteBtn id="<%= rs.getInt("packageID") %>" onclick="confirmation(this.id)">Delete</button></td> 
-      </tr>
-      <% 
-          }
-
-          rs.close();
-          con.close();
-
-        } catch (Exception e) {
-          e.printStackTrace();
-        }
-      %>
-
-    </table>
-    </div>
-	<script>
-	function confirmation(packageID){					  		 
-		  console.log(packageID);
-		  var r = confirm("Are you sure you want to delete?");
-		  if (r == true) {				 		  
-			  location.href = 'DeletePackageController?id=' + packageID;
-			  alert("Selected package successfully deleted");			
-		  } else {				  
-		      return false;	
-		  }
-	}
-	</script>
+  <footer>
+    <p>&copy; 2024  Management System</p>
+  </footer>
 </body>
 </html>

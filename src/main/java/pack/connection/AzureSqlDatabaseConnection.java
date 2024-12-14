@@ -1,30 +1,25 @@
-package pack.connection;
+package pack.connection; // Make sure this matches your package declaration
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
-public class AzureSqlDatabaseConnection { // Class name changed
-    static Connection con;
+public class AzureSqlDatabaseConnection {
+
+    // Database credentials
+    private static final String DB_DRIVER = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    private static final String DB_CONNECTION = "jdbc:sqlserver://nikkospace.database.windows.net:1433;database=haiya;user=nikko@nikkospace;password=Muhammadyazid01!;encrypt=true;trustServerCertificate=false;hostNameInCertificate=*.database.windows.net;loginTimeout=30;";
+    private static final String DB_USER = "nikko@nikkospace"; 
+    private static final String DB_PASSWORD = "Muhammadyazid01!";
 
     public static Connection getConnection() {
+        Connection connection = null;
         try {
-            // 1. Retrieve the connection string from the environment variable
-            String connectionString = System.getenv("SQL_CONNECTION_STRING");
-
-            // 2. Create connection (no need to load a driver explicitly for Azure SQL Database)
-            try {
-                con = DriverManager.getConnection(connectionString);
-                System.out.println("Connected to Azure SQL Database");
-            } catch (SQLException e) {
-                System.err.println("Error connecting to Azure SQL Database: " + e.getMessage());
-                e.printStackTrace();
-            }
-
-        } catch (Exception e) {
-            System.err.println("Error getting connection string: " + e.getMessage());
+            Class.forName(DB_DRIVER);
+            connection = DriverManager.getConnection(DB_CONNECTION, DB_USER, DB_PASSWORD);
+        } catch (ClassNotFoundException | SQLException e) {
             e.printStackTrace();
         }
-        return con;
+        return connection;
     }
 }

@@ -62,9 +62,5 @@
       </table>
     </section>
   </main>
-
-  <footer>
-    <p>&copy; 2024  Management System</p>
-  </footer>
 </body>
 </html>

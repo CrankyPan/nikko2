@@ -14,79 +14,47 @@
 <link rel="stylesheet" href="IndexPackageStyle.css">
 </head>
 <body>
+<div class="container">
+    <h1>Package List</h1>
+    <table border="1">
+      <tr>
+        <th>Package Id</th>
+        <th>Package Name</th>
+        <th>Package Price</th>
+        <th colspan="3">Action</th>
+      </tr>
 
-	  <%
-        List<Package> packages = new ArrayList<Package>();
-
+      <%
         try {
-            Connection con = AzureSqlDatabaseConnection.getConnection();
-            Statement stmt = con.createStatement();
-            String sql = "SELECT * FROM package ORDER BY packageId";
-            ResultSet rs = stmt.executeQuery(sql);
+          Connection con = AzureSqlDatabaseConnection.getConnection();
+          String sql = "SELECT * FROM package ORDER BY packageId";
+          PreparedStatement ps = con.prepareStatement(sql);
+          ResultSet rs = ps.executeQuery();
 
-            while (rs.next()) {
-                Package p = new Package(
-                    rs.getInt("packageId"),
-                    rs.getString("packageName"),
-                    rs.getDouble("packagePrice")
-                );
-                packages.add(p);
-            }
+          while (rs.next()) { 
+      %>
+      <tr>
+        <td><%= rs.getInt("packageId") %></td>
+        <td><%= rs.getString("packageName") %></td>
+        <td><%= rs.getDouble("packagePrice") %></td>
+        <td><a class="btn btn-info" href="ViewPackageController?packageid=<%= rs.getInt("packageId") %>">View</a></td>
+        <td><a class="btn btn-primary" href="UpdatePackageController?id=<%= rs.getInt("packageId") %>">Update</a></td>
+        <td><button class=deleteBtn id="<%= rs.getInt("packageId") %>" onclick="confirmation(this.id)">Delete</button></td> 
+      </tr>
+      <% 
+          }
 
-            con.close(); 
+          rs.close();
+          ps.close();
+          con.close();
 
-        } catch(Exception e) {
-            e.printStackTrace(); 
+        } catch (Exception e) {
+          e.printStackTrace();
         }
+      %>
 
-        request.setAttribute("packages", packages); 
-    %>
-
-	<header>
-        <div id="menu-bar" class="fa fa-bars"></div>
-        <a href="#" class="logo"><img class="capal_logo" src="img/CAPAL LOGO.png" alt="Logo"></a>
-        <nav class="navbar">
-            <a href="index.jsp">Home</a>
-            <a href="index.jsp">Appointment</a>
-            <a href="indexPet.jsp">Pet</a>
-            <a href="indexProfile.jsp">Profile</a>
-        </nav>
-        <div class="icons">
-            <a href="indexProfile.jsp"><i></i></a>
-        </div>
-    </header>
-    
-    <div class="container">
-	<h1>Package List</h1>
-	<table border="1" >
-		<tr>
-			<th>Package Id</th>
-			<th>Package Name</th>
-			<th>Package Price</th>
-			<th colspan="3">Action</th>
-		</tr>
-		<%
-
-
-  for (Package pkg : packages) { 
-%>
-    <tr>
-        <td><%= pkg.getpackageId() %></td>
-        <td><%= pkg.getpackageName() %></td>
-        <td><%= pkg.getpackagePrice() %></td>
-        <td><a class="btn btn-info" href="ViewPackageController?packageid=<%= pkg.getpackageId() %>">View</a></td>
-        <td><a class="btn btn-primary" href="UpdatePackageController?id=<%= pkg.getpackageId() %>">Update</a></td>
-        <td><button class=deleteBtn id="<%= pkg.getpackageId() %>" onclick="confirmation(this.id)">Delete</button></td> 
-    </tr>
-<% 
-  } 
-%> 
-	</table>
-	<div class="addbtn" >
-	<a href="addPackage.jsp" class="addPackageBtn">Add New Package</a>
-	</div>
-		
-	</div>
+    </table>
+    </div>
 	<script>
 	function confirmation(packageId){					  		 
 		  console.log(packageId);

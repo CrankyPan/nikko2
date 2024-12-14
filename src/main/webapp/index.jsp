@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
     pageEncoding="ISO-8859-1"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core"  prefix="c"%>
-    <%@ page import="pack.connection.ConnectionManager" %>
+    <%@ page import="pack.connection.AzureSqlDatabaseConnection" %>
 <%@ page import="java.sql.*" %>
 <%@ page import="pack.model.Package" %>
 <%@ page import="java.util.ArrayList" %>
@@ -19,9 +19,9 @@
         List<Package> packages = new ArrayList<Package>();
 
         try {
-            Connection con = ConnectionManager.getConnection();
+            Connection con = AzureSqlDatabaseConnection.getConnection();
             Statement stmt = con.createStatement();
-            String sql = "SELECT * FROM packages ORDER BY packageid";
+            String sql = "SELECT * FROM package ORDER BY packageId";
             ResultSet rs = stmt.executeQuery(sql);
 
             while (rs.next()) {
